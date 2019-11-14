@@ -9,15 +9,16 @@ import javaslang.Tuple2;
 public class Redux {
 	 private static final PropertyUtilsBean props = new PropertyUtilsBean();
 
-	    public static <State, Action> Store<State, Action> createStore(State initialState, Reducer<Action, State> reducer,
+	    @SuppressWarnings("rawtypes")
+		public static <State, Action> Store<State, Action> createStore(State initialState, Reducer<Action, State> reducer,
 	                Middleware... middlewares) {
 	        return Store.create(initialState, reducer, middlewares);
 	    }
 
-	    @SafeVarargs
+	    @SuppressWarnings({ "rawtypes", "unchecked" })
+		@SafeVarargs
 	    public static <State> Reducer<Object, State> combineReducers(Tuple2<String, Reducer>... reducers) {
 	        javaslang.collection.Map<String, Reducer> allReducers = javaslang.collection.HashMap.ofEntries(reducers);
-
 	        return (action, state) -> {
 	            if (state instanceof Map) {
 	                Map<String, Object> s = (Map<String, Object>) state;

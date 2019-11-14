@@ -7,7 +7,7 @@ public interface TriConsumer<T, U, V> {
 	
 	void accept(T t, U u, V v);
 	
-	default TriConsumer<T, U, V> andThen(TriConsumer<? super T, ? super U, ? super V> after) {
+	default TriConsumer<T, U, V> andThen(TriConsumer<T, U, V> after) {
 		Objects.requireNonNull(after);
 		
 		return (l, r, v) -> {

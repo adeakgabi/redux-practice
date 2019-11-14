@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 import javaslang.collection.List;
 
+//@SuppressWarnings("hiding")
 public class Store<State, Action> extends Observable implements ReduxStore<State, Action>{
 	
 	State currentState;
@@ -17,11 +18,13 @@ public class Store<State, Action> extends Observable implements ReduxStore<State
 	final Map<UUID, Consumer<State>> consumers = new HashMap<>();
 	final Consumer<Action> middlewareStack;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static <State, Action> Store<State, Action> create(State initialState, Reducer<Action, State> reducer,
 			Middleware[] middlewares) {
 		return new Store<>(initialState, reducer, middlewares);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Store(State initialState, Reducer<Action, State> reducer, Middleware<State, Action>... middlewares) {
 	    this.currentState = initialState;
 	    this.reducer = reducer;
@@ -81,7 +84,6 @@ public class Store<State, Action> extends Observable implements ReduxStore<State
 
 	@Override
 	public void dispatch() {
-		// TODO Auto-generated method stub
 		
 	}
 
